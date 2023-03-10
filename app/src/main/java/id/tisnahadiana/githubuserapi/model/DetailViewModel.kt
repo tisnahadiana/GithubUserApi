@@ -15,12 +15,18 @@ class DetailViewModel : ViewModel() {
 
     private val apiService: ApiService = ApiConfig.getApiService()
     private val user = MutableLiveData<GithubDetailResponse>()
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun setUserDetail(username: String) {
+        _isLoading.value = true
         apiService.getUserDetail(username).enqueue(object : Callback<GithubDetailResponse> {
             override fun onResponse(
                 call: Call<GithubDetailResponse>,
                 response: Response<GithubDetailResponse>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     user.value = response.body()
                 } else {
@@ -29,6 +35,7 @@ class DetailViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<GithubDetailResponse>, t: Throwable) {
+                _isLoading.value = false
                 Log.e("DetailViewModel", "getUserDetail onFailure error: ${t.message}")
             }
         })

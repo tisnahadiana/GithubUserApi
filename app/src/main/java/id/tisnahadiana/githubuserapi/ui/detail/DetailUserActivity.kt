@@ -2,6 +2,7 @@ package id.tisnahadiana.githubuserapi.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
@@ -29,7 +30,14 @@ class DetailUserActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
 
-        username?.let { viewModel.setUserDetail(it) }
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        username?.let {
+            viewModel.setUserDetail(it)
+        }
+
         viewModel.getUserDetail().observe(this) {
             if (it != null) {
                 binding.apply {
@@ -50,4 +58,9 @@ class DetailUserActivity : AppCompatActivity() {
             tabs.setupWithViewPager(viewPager)
         }
     }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
 }

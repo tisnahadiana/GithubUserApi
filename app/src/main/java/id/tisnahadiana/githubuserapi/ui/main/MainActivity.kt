@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         adapter = GithubUserAdapter()
-        adapter.notifyDataSetChanged()
 
         binding.rvUser.layoutManager = LinearLayoutManager(this)
         binding.rvUser.adapter = adapter
