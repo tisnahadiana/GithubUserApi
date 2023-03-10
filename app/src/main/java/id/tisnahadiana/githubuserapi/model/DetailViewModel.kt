@@ -12,12 +12,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel : ViewModel() {
+
     private val apiService: ApiService = ApiConfig.getApiService()
     private val user = MutableLiveData<GithubDetailResponse>()
-
     fun setUserDetail(username: String) {
         apiService.getUserDetail(username).enqueue(object : Callback<GithubDetailResponse> {
-            override fun onResponse(call: Call<GithubDetailResponse>, response: Response<GithubDetailResponse>) {
+            override fun onResponse(
+                call: Call<GithubDetailResponse>,
+                response: Response<GithubDetailResponse>
+            ) {
                 if (response.isSuccessful) {
                     user.value = response.body()
                 } else {

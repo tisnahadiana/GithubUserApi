@@ -12,14 +12,13 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
 
     private val list = ArrayList<User>()
 
-
     private var onItemClickCallback: OnItemClickCallback? = null
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setList(users: ArrayList<User>){
+    fun setList(users: ArrayList<User>) {
         list.clear()
         list.addAll(users)
         notifyDataSetChanged()
@@ -37,9 +36,10 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
     override fun getItemCount(): Int = list.size
 
 
-    inner class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class UserViewHolder(val binding: ItemUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(user : User){
+        fun bind(user: User) {
             binding.root.setOnClickListener {
                 onItemClickCallback?.onItemClicked(user)
             }
@@ -58,7 +58,7 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
 
     }
 
-    interface OnItemClickCallback{
+    interface OnItemClickCallback {
         fun onItemClicked(data: User)
     }
 }

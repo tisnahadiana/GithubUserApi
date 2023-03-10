@@ -43,5 +43,11 @@ class DetailUserActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
+        binding.apply {
+            viewPager.adapter = sectionPagerAdapter
+            tabs.setupWithViewPager(viewPager)
+        }
     }
 }
