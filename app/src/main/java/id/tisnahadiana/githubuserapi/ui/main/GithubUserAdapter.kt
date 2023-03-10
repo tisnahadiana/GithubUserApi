@@ -15,6 +15,10 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
 
     private var onItemClickCallback: OnItemClickCallback? = null
 
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     fun setList(users: ArrayList<User>){
         list.clear()
         list.addAll(users)
@@ -44,7 +48,6 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
                 Glide.with(itemView)
                     .load(user.avatarUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .centerCrop()
                     .into(avatarImage)
                 usernameText.text = user.login
                 urlText.text = user.htmlUrl

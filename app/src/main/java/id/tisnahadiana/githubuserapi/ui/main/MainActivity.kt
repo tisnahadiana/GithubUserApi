@@ -1,5 +1,6 @@
 package id.tisnahadiana.githubuserapi.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,8 +9,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
+import id.tisnahadiana.githubuserapi.api.User
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.model.MainViewModel
+import id.tisnahadiana.githubuserapi.ui.detail.DetailUserActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,15 +33,15 @@ class MainActivity : AppCompatActivity() {
         binding.rvUser.layoutManager = LinearLayoutManager(this)
         binding.rvUser.adapter = adapter
 
-//        adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
-//            override fun onItemClicked(data: User) {
-//                Intent(this@MainActivity, DetailUserActivity::class.java).also {
-//                    it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
-//                    startActivity(it)
-//                }
-//            }
-//
-//        })
+        adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: User) {
+                Intent(this@MainActivity, DetailUserActivity::class.java).also {
+                    it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
+                    startActivity(it)
+                }
+            }
+
+        })
 
         viewModel.getSearchUsers().observe(this) { users ->
             users?.let {
