@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import id.tisnahadiana.githubuserapi.model.DetailViewModel
 
@@ -47,6 +48,7 @@ class DetailUserActivity : AppCompatActivity() {
                     txtFollowing.text = " ${it.following} Following"
                     Glide.with(this@DetailUserActivity)
                         .load(it.avatarUrl)
+                        .placeholder(R.drawable.baseline_account_circle_24)
                         .into(imgProfile)
                 }
             }

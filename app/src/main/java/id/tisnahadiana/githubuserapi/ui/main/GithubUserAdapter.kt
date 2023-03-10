@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.api.User
 import id.tisnahadiana.githubuserapi.databinding.ItemUserBinding
 
@@ -47,7 +48,7 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
             binding.apply {
                 Glide.with(itemView)
                     .load(user.avatarUrl)
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.drawable.baseline_account_circle_24)
                     .into(avatarImage)
                 usernameText.text = user.login
                 urlText.text = user.htmlUrl
