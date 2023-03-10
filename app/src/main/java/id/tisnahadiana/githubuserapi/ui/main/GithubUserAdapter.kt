@@ -12,6 +12,7 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
 
     private val list = ArrayList<User>()
 
+
     private var onItemClickCallback: OnItemClickCallback? = null
 
     fun setList(users: ArrayList<User>){
