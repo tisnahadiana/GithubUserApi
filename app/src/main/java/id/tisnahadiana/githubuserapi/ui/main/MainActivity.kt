@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -50,16 +51,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(this@MainActivity)
+                    .setMessage(R.string.exit_hint)
+                    .setPositiveButton("Ya") { _, _ ->
+                        finish()
+                    }
+                    .setNegativeButton("Tidak") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, callback)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
-        searchView.queryHint = resources.getString(R.string.search_hint)
+        val searchView = searchItem?.actionView as? SearchView
+        searchView?.queryHint = resources.getString(R.string.search_hint)
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     searchUser(it)
@@ -69,7 +85,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                if (newText.isNullOrEmpty()) {
+                    viewModel.setSearchUsers("")
+                } else {
+                    viewModel.setSearchUsers(newText)
+                }
+                return true
             }
         })
 
@@ -86,15 +107,4 @@ class MainActivity : AppCompatActivity() {
         binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
-    override fun onBackPressed() {
-        AlertDialog.Builder(this)
-            .setMessage(R.string.exit_hint)
-            .setPositiveButton("Ya") { _, _ ->
-                super.onBackPressed()
-            }
-            .setNegativeButton("Tidak") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
 }

@@ -2,6 +2,7 @@ package id.tisnahadiana.githubuserapi.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.tisnahadiana.githubuserapi.R
@@ -11,16 +12,18 @@ import id.tisnahadiana.githubuserapi.databinding.ItemUserBinding
 class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>() {
 
     private val list = ArrayList<User>()
+    private val diffCallback = UserDiffCallback()
     private var onItemClickCallback: OnItemClickCallback? = null
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setList(users: ArrayList<User>) {
+    fun setList(newList: List<User>) {
+        val result = DiffUtil.calculateDiff(diffCallback.calculateDiff(newList, list))
         list.clear()
-        list.addAll(users)
-        notifyDataSetChanged()
+        list.addAll(newList)
+        result.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -59,6 +62,29 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
 
     interface OnItemClickCallback {
         fun onItemClicked(data: User)
+    }
+
+    inner class UserDiffCallback : DiffUtil.Callback() {
+        private lateinit var newList: List<User>
+        private lateinit var oldList: List<User>
+
+        fun calculateDiff(newList: List<User>, oldList: List<User>): UserDiffCallback {
+            this.newList = newList
+            this.oldList = oldList
+            return this
+        }
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }
 
