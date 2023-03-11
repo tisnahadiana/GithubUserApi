@@ -13,7 +13,7 @@ import id.tisnahadiana.githubuserapi.ui.main.GithubUserAdapter
 class FollowingFragment : Fragment(R.layout.fragment_follow) {
 
     private var _binding: FragmentFollowBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var viewModel: FollowingViewModel
     private lateinit var adapter: GithubUserAdapter
     private lateinit var username: String
@@ -27,7 +27,7 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
 
         adapter = GithubUserAdapter()
 
-        binding.rvUser.apply {
+        binding?.rvUser?.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@FollowingFragment.adapter
@@ -49,6 +49,6 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
     }
 
     private fun showLoading(state: Boolean) {
-        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+        binding?.progressBar?.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

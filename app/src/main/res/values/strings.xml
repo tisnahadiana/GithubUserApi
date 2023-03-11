@@ -5,4 +5,5 @@
     <string name="tab_1">Followers</string>
     <string name="tab_2">Following</string>
     <string name="search_hint">Cari User Github di sini</string>
+    <string name="exit_hint">Apakah Anda yakin ingin keluar dari aplikasi?</string>
 </resources>

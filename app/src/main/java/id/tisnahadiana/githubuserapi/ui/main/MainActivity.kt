@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         AlertDialog.Builder(this)
-            .setMessage("Apakah Anda yakin ingin keluar dari aplikasi?")
+            .setMessage(R.string.exit_hint)
             .setPositiveButton("Ya") { _, _ ->
                 super.onBackPressed()
             }

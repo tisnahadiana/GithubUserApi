@@ -7,6 +7,8 @@ import android.os.Handler
 import id.tisnahadiana.githubuserapi.R
 
 class SplashActivity : AppCompatActivity() {
+
+    private val SPLASH_DELAY_MS = 2000L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -16,6 +18,6 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, 2000)
+        }, SPLASH_DELAY_MS)
     }
 }

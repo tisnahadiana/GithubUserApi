@@ -10,9 +10,6 @@ import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import id.tisnahadiana.githubuserapi.model.DetailViewModel
 
 class DetailUserActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_USERNAME = "extra_username"
-    }
 
     private lateinit var binding: ActivityDetailUserBinding
     private lateinit var viewModel: DetailViewModel
@@ -63,6 +60,10 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
     }
 
 }
