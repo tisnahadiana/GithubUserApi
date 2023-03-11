@@ -11,7 +11,6 @@ import id.tisnahadiana.githubuserapi.databinding.ItemUserBinding
 class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>() {
 
     private val list = ArrayList<User>()
-
     private var onItemClickCallback: OnItemClickCallback? = null
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
