@@ -1,5 +1,6 @@
 package id.tisnahadiana.githubuserapi.api
 
+import id.tisnahadiana.githubuserapi.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ class ApiConfig {
             val authInterceptor = Interceptor { chain ->
                 val req = chain.request()
                 val requestHeaders = req.newBuilder()
-                    .addHeader("Authorization", "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")
+                    .addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}")
                     .build()
                 chain.proceed(requestHeaders)
             }
