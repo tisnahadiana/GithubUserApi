@@ -20,7 +20,7 @@ class ApiConfig {
                 .addInterceptor(authInterceptor)
                 .build()
             return Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl(BuildConfig.URL_KEY)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
