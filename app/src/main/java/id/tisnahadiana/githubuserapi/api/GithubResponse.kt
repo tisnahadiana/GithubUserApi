@@ -3,76 +3,74 @@ package id.tisnahadiana.githubuserapi.api
 import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(
-    @SerializedName("total_count")
-    val totalCount: Int,
 
-    @SerializedName("incomplete_results")
-    val incompleteResults: Boolean,
+    @field:SerializedName("total_count")
+    val totalCount: Int? = null,
 
-    @SerializedName("items")
-//    val items: List<User>
-    val items : ArrayList<User>
-)
+    @field:SerializedName("incomplete_results")
+    val incompleteResults: Boolean? = null,
 
-data class UserResponse(
-    val items : ArrayList<User>
+    @field:SerializedName("items")
+    val items: ArrayList<User>? = null
 )
 
 data class User(
-    @SerializedName("login")
-    val login: String,
 
-    @SerializedName("id")
-    val id: Int,
+    @field:SerializedName("gists_url")
+    val gistsUrl: String? = null,
 
-    @SerializedName("node_id")
-    val nodeId: String,
+    @field:SerializedName("repos_url")
+    val reposUrl: String? = null,
 
-    @SerializedName("avatar_url")
-    val avatarUrl: String,
+    @field:SerializedName("following_url")
+    val followingUrl: String? = null,
 
-    @SerializedName("gravatar_id")
-    val gravatarId: String,
+    @field:SerializedName("starred_url")
+    val starredUrl: String? = null,
 
-    @SerializedName("url")
-    val url: String,
+    @field:SerializedName("login")
+    val login: String? = null,
 
-    @SerializedName("html_url")
-    val htmlUrl: String,
+    @field:SerializedName("followers_url")
+    val followersUrl: String? = null,
 
-    @SerializedName("followers_url")
-    val followersUrl: String,
+    @field:SerializedName("type")
+    val type: String? = null,
 
-    @SerializedName("following_url")
-    val followingUrl: String,
+    @field:SerializedName("url")
+    val url: String? = null,
 
-    @SerializedName("gists_url")
-    val gistsUrl: String,
+    @field:SerializedName("subscriptions_url")
+    val subscriptionsUrl: String? = null,
 
-    @SerializedName("starred_url")
-    val starredUrl: String,
+    @field:SerializedName("score")
+    val score: Int? = null,
 
-    @SerializedName("subscriptions_url")
-    val subscriptionsUrl: String,
+    @field:SerializedName("received_events_url")
+    val receivedEventsUrl: String? = null,
 
-    @SerializedName("organizations_url")
-    val organizationsUrl: String,
+    @field:SerializedName("avatar_url")
+    val avatarUrl: String? = null,
 
-    @SerializedName("repos_url")
-    val reposUrl: String,
+    @field:SerializedName("events_url")
+    val eventsUrl: String? = null,
 
-    @SerializedName("events_url")
-    val eventsUrl: String,
+    @field:SerializedName("html_url")
+    val htmlUrl: String? = null,
 
-    @SerializedName("received_events_url")
-    val receivedEventsUrl: String,
+    @field:SerializedName("site_admin")
+    val siteAdmin: Boolean? = null,
 
-    @SerializedName("type")
-    val type: String,
+    @field:SerializedName("id")
+    val id: Int? = null,
 
-    @SerializedName("site_admin")
-    val siteAdmin: Boolean,
+    @field:SerializedName("gravatar_id")
+    val gravatarId: String? = null,
 
-    @SerializedName("score")
-    val score: Double
+    @field:SerializedName("node_id")
+    val nodeId: String? = null,
+
+    @field:SerializedName("organizations_url")
+    val organizationsUrl: String? = null
 )
+

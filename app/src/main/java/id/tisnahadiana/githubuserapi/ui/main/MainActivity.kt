@@ -1,15 +1,20 @@
 package id.tisnahadiana.githubuserapi.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
+import id.tisnahadiana.githubuserapi.api.User
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.model.MainViewModel
+import id.tisnahadiana.githubuserapi.ui.detail.DetailUserActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,20 +30,19 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         adapter = GithubUserAdapter()
-        adapter.notifyDataSetChanged()
 
         binding.rvUser.layoutManager = LinearLayoutManager(this)
         binding.rvUser.adapter = adapter
 
-//        adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
-//            override fun onItemClicked(data: User) {
-//                Intent(this@MainActivity, DetailUserActivity::class.java).also {
-//                    it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
-//                    startActivity(it)
-//                }
-//            }
-//
-//        })
+        adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: User) {
+                Intent(this@MainActivity, DetailUserActivity::class.java).also {
+                    it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
+                    startActivity(it)
+                }
+            }
+
+        })
 
         viewModel.getSearchUsers().observe(this) { users ->
             users?.let {
@@ -47,15 +51,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(this@MainActivity)
+                    .setMessage(R.string.exit_hint)
+                    .setPositiveButton("Ya") { _, _ ->
+                        finish()
+                    }
+                    .setNegativeButton("Tidak") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, callback)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        val searchView = searchItem?.actionView as? SearchView
+        searchView?.queryHint = resources.getString(R.string.search_hint)
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     searchUser(it)
@@ -65,7 +85,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                if (newText.isNullOrEmpty()) {
+                    viewModel.setSearchUsers("")
+                } else {
+                    viewModel.setSearchUsers(newText)
+                }
+                return true
             }
         })
 
@@ -81,4 +106,5 @@ class MainActivity : AppCompatActivity() {
     private fun showLoading(state: Boolean) {
         binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
+
 }

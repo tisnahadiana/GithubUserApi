@@ -1,4 +1,5 @@
 package id.tisnahadiana.githubuserapi.model
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +19,10 @@ class MainViewModel : ViewModel() {
 
     fun setSearchUsers(query: String) {
         apiService.searchUsers(query).enqueue(object : Callback<SearchResponse> {
-            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+            override fun onResponse(
+                call: Call<SearchResponse>,
+                response: Response<SearchResponse>
+            ) {
                 if (response.isSuccessful) {
                     val users = response.body()?.items ?: arrayListOf()
                     listUsers.postValue(users)
