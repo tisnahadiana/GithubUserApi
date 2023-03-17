@@ -21,8 +21,8 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.getTheme().observe(this) {
             if (it) {
@@ -44,6 +44,10 @@ class SettingActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.favorite_menu ->{
                 finish()
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                true
             }
         }
         return super.onOptionsItemSelected(item)
