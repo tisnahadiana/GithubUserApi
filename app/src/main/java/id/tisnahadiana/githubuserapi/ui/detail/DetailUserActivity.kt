@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
-import id.tisnahadiana.githubuserapi.model.DetailViewModel
+import id.tisnahadiana.githubuserapi.data.model.DetailViewModel
 
 class DetailUserActivity : AppCompatActivity() {
 

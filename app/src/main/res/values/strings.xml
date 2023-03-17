@@ -7,4 +7,7 @@
     <string name="search_hint">Cari User Github di sini</string>
     <string name="exit_hint">Apakah Anda yakin ingin keluar dari aplikasi?</string>
     <string name="setting">setting</string>
+    <string name="favorite">Favorite</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
 </resources>

@@ -4,28 +4,44 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.api.User
+import id.tisnahadiana.githubuserapi.data.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
-import id.tisnahadiana.githubuserapi.model.MainViewModel
+import id.tisnahadiana.githubuserapi.data.model.MainViewModel
 import id.tisnahadiana.githubuserapi.ui.detail.DetailUserActivity
+import id.tisnahadiana.githubuserapi.ui.setting.SettingActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: GithubUserAdapter
     private lateinit var viewModel: MainViewModel
+    private val viewModelsetting by viewModels<MainViewModel> {
+        MainViewModel.Factory(SettingPreferences(this))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModelsetting.getTheme().observe(this) {
+            if (it) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -95,6 +111,23 @@ class MainActivity : AppCompatActivity() {
         })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.favorite_menu ->{
+//                Intent(this, FavoriteActivity::class.java).also {
+//                    startActivity(it)
+//                }
+            }
+
+            R.id.setting -> {
+                Intent(this, SettingActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun searchUser(query: String) {

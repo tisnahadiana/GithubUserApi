@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.FragmentFollowBinding
-import id.tisnahadiana.githubuserapi.model.FollowingViewModel
+import id.tisnahadiana.githubuserapi.data.model.FollowingViewModel
 import id.tisnahadiana.githubuserapi.ui.main.GithubUserAdapter
 
 class FollowingFragment : Fragment(R.layout.fragment_follow) {
