@@ -19,6 +19,7 @@ import id.tisnahadiana.githubuserapi.data.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.data.model.MainViewModel
 import id.tisnahadiana.githubuserapi.ui.detail.DetailUserActivity
+import id.tisnahadiana.githubuserapi.ui.favorite.FavoriteActivity
 import id.tisnahadiana.githubuserapi.ui.setting.SettingActivity
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClicked(data: User) {
                 Intent(this@MainActivity, DetailUserActivity::class.java).also {
                     it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
+                    it.putExtra(DetailUserActivity.EXTRA_ID, data.id)
+                    it.putExtra(DetailUserActivity.EXTRA_URL, data.avatarUrl)
                     startActivity(it)
                 }
             }
@@ -116,9 +119,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.favorite_menu ->{
-//                Intent(this, FavoriteActivity::class.java).also {
-//                    startActivity(it)
-//                }
+                Intent(this, FavoriteActivity::class.java).also {
+                    startActivity(it)
+                }
             }
 
             R.id.setting -> {
