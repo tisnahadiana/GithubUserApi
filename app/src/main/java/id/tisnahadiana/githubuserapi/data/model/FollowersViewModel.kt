@@ -15,6 +15,7 @@ class FollowersViewModel : ViewModel() {
 
     private val apiService: ApiService = ApiConfig.getApiService()
     val listFollowers = MutableLiveData<ArrayList<User>>()
+    val errorMessage = MutableLiveData<String>()
 
     fun setListFollowers(username: String) {
         apiService.getFollowers(username)
@@ -25,11 +26,14 @@ class FollowersViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         listFollowers.postValue(response.body())
+                    } else {
+                        errorMessage.postValue(response.message())
                     }
                 }
 
                 override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
                     t.message?.let { Log.d("Failure", it) }
+                    errorMessage.postValue(t.message)
                 }
 
             })
@@ -37,5 +41,9 @@ class FollowersViewModel : ViewModel() {
 
     fun getListFollowers(): LiveData<ArrayList<User>> {
         return listFollowers
+    }
+
+    fun getErrorMessage(): LiveData<String> {
+        return errorMessage
     }
 }

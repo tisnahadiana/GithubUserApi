@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import id.tisnahadiana.githubuserapi.data.model.DetailViewModel
@@ -37,9 +38,6 @@ class DetailUserActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-//        username?.let {
-//            viewModel.setUserDetail(it)
-//        }
         if (username != null) {
             viewModel.setUserDetail(username)
         }
@@ -49,8 +47,8 @@ class DetailUserActivity : AppCompatActivity() {
                 binding.apply {
                     txtName.text = it.name
                     txtUsername.text = it.login
-                    txtFollowers.text = " ${it.followers} Followers"
-                    txtFollowing.text = " ${it.following} Following"
+                    txtFollowers.text = resources.getString(R.string.followers, it.followers)
+                    txtFollowing.text = resources.getString(R.string.following, it.following)
                     Glide.with(this@DetailUserActivity)
                         .load(it.avatarUrl)
                         .placeholder(R.drawable.baseline_account_circle_24)
@@ -91,10 +89,12 @@ class DetailUserActivity : AppCompatActivity() {
             binding.toggleFavorite.isChecked = _isChecked
         }
 
-        val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
+        val sectionPagerAdapter = SectionPagerAdapter(this, intent.extras)
         binding.apply {
             viewPager.adapter = sectionPagerAdapter
-            tabs.setupWithViewPager(viewPager)
+            TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+                tab.text = resources.getString(SectionPagerAdapter.TAB_TITLES[position])
+            }.attach()
         }
 
     }

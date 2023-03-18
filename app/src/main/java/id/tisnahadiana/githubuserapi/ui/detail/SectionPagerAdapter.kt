@@ -1,37 +1,41 @@
 package id.tisnahadiana.githubuserapi.ui.detail
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import id.tisnahadiana.githubuserapi.R
+import id.tisnahadiana.githubuserapi.ui.detail.DetailUserActivity.Companion.EXTRA_USERNAME
 
-class SectionPagerAdapter(private val Ctx: Context, fm: FragmentManager, data: Bundle) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class SectionPagerAdapter(
+    fragmentActivity: FragmentActivity,
+    private val arguments: Bundle?
+) : FragmentStateAdapter(fragmentActivity) {
 
     companion object {
         private const val TAB_1 = R.string.tab_1
         private const val TAB_2 = R.string.tab_2
-        private val TAB_TITLES = intArrayOf(TAB_1, TAB_2)
+        internal val TAB_TITLES = intArrayOf(TAB_1, TAB_2)
     }
 
-    private val fragmentBundle: Bundle = data
+    override fun getItemCount(): Int = TAB_TITLES.size
 
-    override fun getCount(): Int = TAB_TITLES.size
+    override fun createFragment(position: Int): Fragment {
+        val bundle = Bundle()
+        bundle.putString(EXTRA_USERNAME, arguments?.getString(EXTRA_USERNAME))
 
-    override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> FollowersFragment()
-            1 -> FollowingFragment()
+            0 -> FollowersFragment().apply {
+                arguments = bundle
+            }
+            1 -> FollowingFragment().apply {
+                arguments = bundle
+            }
             else -> throw IllegalStateException("Invalid position $position")
-        }.apply {
-            arguments = fragmentBundle
         }
     }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return Ctx.resources.getString(TAB_TITLES[position])
-    }
-
+//
+//    fun getPageTitle(position: Int): CharSequence {
+//        return context.resources.getString(TAB_TITLES[position])
+//    }
 }
