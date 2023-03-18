@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import id.tisnahadiana.githubuserapi.R
 
 class SplashActivity : AppCompatActivity() {
@@ -15,7 +16,8 @@ class SplashActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        Handler().postDelayed({
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, SPLASH_DELAY_MS)

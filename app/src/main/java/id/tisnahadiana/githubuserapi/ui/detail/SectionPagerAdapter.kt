@@ -34,8 +34,4 @@ class SectionPagerAdapter(
             else -> throw IllegalStateException("Invalid position $position")
         }
     }
-//
-//    fun getPageTitle(position: Int): CharSequence {
-//        return context.resources.getString(TAB_TITLES[position])
-//    }
 }
