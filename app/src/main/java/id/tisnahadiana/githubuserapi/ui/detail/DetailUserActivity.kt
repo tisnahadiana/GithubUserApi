@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
-import id.tisnahadiana.githubuserapi.model.DetailViewModel
+import id.tisnahadiana.githubuserapi.data.model.DetailViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -20,20 +24,24 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val username = intent.getStringExtra(EXTRA_USERNAME)
+        val id = intent.getIntExtra(EXTRA_ID, 0)
+        val avatarUrl = intent.getStringExtra(EXTRA_URL)
+        val htmlUrl = intent.getStringExtra(EXTRA_HTML)
+
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
-        username?.let {
-            viewModel.setUserDetail(it)
+//        username?.let {
+//            viewModel.setUserDetail(it)
+//        }
+        if (username != null) {
+            viewModel.setUserDetail(username)
         }
 
         viewModel.getUserDetail().observe(this) {
@@ -51,11 +59,44 @@ class DetailUserActivity : AppCompatActivity() {
             }
         }
 
+        var _isChecked = false
+        CoroutineScope(Dispatchers.IO).launch {
+            val count = viewModel.checkUser(id)
+            withContext(Dispatchers.Main) {
+                if (count != null) {
+                    if (count > 0) {
+                        binding.toggleFavorite.isChecked = true
+                        _isChecked = true
+                    } else {
+                        binding.toggleFavorite.isChecked = false
+                        _isChecked = false
+                    }
+                }
+            }
+        }
+
+        binding.toggleFavorite.setOnClickListener {
+            _isChecked = !_isChecked
+            if (_isChecked) {
+                if (username != null) {
+                    if (avatarUrl != null) {
+                        if (htmlUrl != null) {
+                            viewModel.addToFavorite(username, id, avatarUrl, htmlUrl)
+                        }
+                    }
+                }
+            } else {
+                viewModel.removeFromFavorite(id)
+            }
+            binding.toggleFavorite.isChecked = _isChecked
+        }
+
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
         binding.apply {
             viewPager.adapter = sectionPagerAdapter
             tabs.setupWithViewPager(viewPager)
         }
+
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -64,6 +105,9 @@ class DetailUserActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_URL = "extra_url"
+        const val EXTRA_HTML = "extra_html"
     }
 
 }

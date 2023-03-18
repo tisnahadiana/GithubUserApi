@@ -1,4 +1,4 @@
-package id.tisnahadiana.githubuserapi.model
+package id.tisnahadiana.githubuserapi.data.model
 
 import android.util.Log
 import androidx.lifecycle.LiveData
