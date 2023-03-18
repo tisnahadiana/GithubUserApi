@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
                     it.putExtra(DetailUserActivity.EXTRA_ID, data.id)
                     it.putExtra(DetailUserActivity.EXTRA_URL, data.avatarUrl)
+                    it.putExtra(DetailUserActivity.EXTRA_HTML, data.htmlUrl)
                     startActivity(it)
                 }
             }
@@ -117,8 +118,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.favorite_menu ->{
+        when (item.itemId) {
+            R.id.favorite_menu -> {
                 Intent(this, FavoriteActivity::class.java).also {
                     startActivity(it)
                 }

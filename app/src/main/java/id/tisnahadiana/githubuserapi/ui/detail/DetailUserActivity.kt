@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import id.tisnahadiana.githubuserapi.data.model.DetailViewModel
@@ -27,6 +26,7 @@ class DetailUserActivity : AppCompatActivity() {
         val username = intent.getStringExtra(EXTRA_USERNAME)
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val avatarUrl = intent.getStringExtra(EXTRA_URL)
+        val htmlUrl = intent.getStringExtra(EXTRA_HTML)
 
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
@@ -80,7 +80,9 @@ class DetailUserActivity : AppCompatActivity() {
             if (_isChecked) {
                 if (username != null) {
                     if (avatarUrl != null) {
-                        viewModel.addToFavorite(username, id, avatarUrl)
+                        if (htmlUrl != null) {
+                            viewModel.addToFavorite(username, id, avatarUrl, htmlUrl)
+                        }
                     }
                 }
             } else {
@@ -105,6 +107,7 @@ class DetailUserActivity : AppCompatActivity() {
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_ID = "extra_id"
         const val EXTRA_URL = "extra_url"
+        const val EXTRA_HTML = "extra_html"
     }
 
 }

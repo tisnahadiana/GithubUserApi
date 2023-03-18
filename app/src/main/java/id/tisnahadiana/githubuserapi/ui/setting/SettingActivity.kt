@@ -23,6 +23,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Setting"
 
         viewModel.getTheme().observe(this) {
             if (it) {
@@ -41,8 +42,8 @@ class SettingActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.favorite_menu ->{
+        when (item.itemId) {
+            R.id.favorite_menu -> {
                 finish()
             }
             android.R.id.home -> {

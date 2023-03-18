@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel (application: Application) : AndroidViewModel(application) {
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val apiService: ApiService = ApiConfig.getApiService()
     private val user = MutableLiveData<GithubDetailResponse>()
@@ -60,12 +60,13 @@ class DetailViewModel (application: Application) : AndroidViewModel(application)
         return user
     }
 
-    fun addToFavorite(username: String, id: Int, avatarUrl: String){
+    fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val user = FavoriteUser(
                 username,
                 id,
-                avatarUrl
+                avatarUrl,
+                htmlUrl
             )
             userDao?.addToFavorite(user)
         }
@@ -73,7 +74,7 @@ class DetailViewModel (application: Application) : AndroidViewModel(application)
 
     fun checkUser(id: Int) = userDao?.checkUser(id)
 
-    fun removeFromFavorite(id: Int){
+    fun removeFromFavorite(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             userDao?.removeFromFavorite(id)
         }

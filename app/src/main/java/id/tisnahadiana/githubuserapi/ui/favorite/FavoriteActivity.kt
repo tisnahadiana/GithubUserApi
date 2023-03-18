@@ -23,6 +23,8 @@ class FavoriteActivity : AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = "Favorite Page"
+
         adapter = GithubUserAdapter()
 
         viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
@@ -33,6 +35,7 @@ class FavoriteActivity : AppCompatActivity() {
                     it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
                     it.putExtra(DetailUserActivity.EXTRA_ID, data.id)
                     it.putExtra(DetailUserActivity.EXTRA_URL, data.avatarUrl)
+                    it.putExtra(DetailUserActivity.EXTRA_HTML, data.htmlUrl)
                     startActivity(it)
                 }
             }
@@ -59,7 +62,8 @@ class FavoriteActivity : AppCompatActivity() {
             val userMapped = User(
                 login = user.login,
                 id = user.id,
-                avatarUrl = user.avatar_url
+                avatarUrl = user.avatar_url,
+                htmlUrl = user.html_url
             )
             listUsers.add(userMapped)
         }
