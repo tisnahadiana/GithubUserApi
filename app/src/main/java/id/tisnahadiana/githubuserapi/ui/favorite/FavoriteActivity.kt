@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.api.User
 import id.tisnahadiana.githubuserapi.data.local.FavoriteUser
 import id.tisnahadiana.githubuserapi.data.model.FavoriteViewModel
@@ -23,12 +24,11 @@ class FavoriteActivity : AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = "Favorite Page"
-
-        adapter = GithubUserAdapter()
+        supportActionBar?.setTitle(R.string.favorite_page)
 
         viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
+        adapter = GithubUserAdapter()
         adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 Intent(this@FavoriteActivity, DetailUserActivity::class.java).also {

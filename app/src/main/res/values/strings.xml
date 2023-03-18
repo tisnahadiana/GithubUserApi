@@ -11,4 +11,8 @@
     <string name="light_theme">Light Theme</string>
     <string name="dark_theme">Dark Theme</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="followers">Followers %d</string>
+    <string name="following">Following %d</string>
+    <string name="favorite_page">Favorite Page</string>
+    <string name="logo_github">Logo GitHub</string>
 </resources>
