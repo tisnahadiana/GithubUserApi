@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:layout_gravity="center"
-    tools:context=".ui.main.SplashActivity">
+    tools:context=".main.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView2"

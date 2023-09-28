@@ -4,8 +4,6 @@
     <color name="primary_light_color">#57606f</color>
     <color name="primary_dark_color">#181e23</color>
     <color name="accent_color">#0366d6</color>
-    <color name="background_color_light">#FFFFFF</color>
-    <color name="background_color_dark">#121212</color>
     <color name="text_color_light">#333333</color>
     <color name="text_color_dark">#FFFFFF</color>
     <color name="black">#FF000000</color>

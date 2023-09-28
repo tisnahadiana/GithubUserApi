@@ -14,16 +14,16 @@
         android:theme="@style/Theme.GithubApi"
         tools:targetApi="31">
         <activity
-            android:name=".ui.favorite.FavoriteActivity"
+            android:name="id.tisnahadiana.githubuserapi.favorite.FavoriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.setting.SettingActivity"
+            android:name="id.tisnahadiana.githubuserapi.setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detail.DetailUserActivity"
+            android:name="id.tisnahadiana.githubuserapi.detail.DetailUserActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.SplashActivity"
+            android:name="id.tisnahadiana.githubuserapi.main.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="id.tisnahadiana.githubuserapi.main.MainActivity"
             android:exported="false" />
     </application>
 
