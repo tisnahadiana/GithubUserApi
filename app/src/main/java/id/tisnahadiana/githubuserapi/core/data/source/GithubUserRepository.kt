@@ -1,5 +1,6 @@
 package id.tisnahadiana.githubuserapi.core.data.source
 
+import androidx.lifecycle.LiveData
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.LocalDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.remote.RemoteDataSource
@@ -27,19 +28,19 @@ class GithubUserRepository private constructor(
             }
     }
 
-    fun getFollowers(username: String, callback: (List<User>?, String?) -> Unit) {
-        remoteDataSource.getFollowers(username, callback)
+    override fun getFollowers(username: String): LiveData<List<User>?> {
+        return remoteDataSource.getFollowers(username)
     }
 
-    fun getFollowing(username: String, callback: (List<User>?, String?) -> Unit) {
-        remoteDataSource.getFollowing(username, callback)
+    override fun getFollowing(username: String): LiveData<List<User>?> {
+        return remoteDataSource.getFollowing(username)
     }
 
-    fun getUserDetail(username: String, callback: (GithubDetailResponse?, String?) -> Unit) {
-        remoteDataSource.getUserDetail(username, callback)
+    override fun getUserDetail( username: String ): LiveData<GithubDetailResponse?> {
+        return remoteDataSource.getUserDetail(username)
     }
 
-    fun getSearchUsers(query: String, callback: (List<User>?, String?) -> Unit) {
-        remoteDataSource.getSearchUsers(query, callback)
+    override fun getSearchUsers(query: String): LiveData<List<User>?> {
+        return remoteDataSource.getSearchUsers(query)
     }
 }

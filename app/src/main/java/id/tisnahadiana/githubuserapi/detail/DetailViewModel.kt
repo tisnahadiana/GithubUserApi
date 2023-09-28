@@ -5,22 +5,18 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiConfig
-import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiService
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
 import id.tisnahadiana.githubuserapi.core.data.source.local.room.FavoriteUserDao
 import id.tisnahadiana.githubuserapi.core.data.source.local.room.UserDatabase
+import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
+class DetailViewModel(application: Application, private val githubUserUseCase: GithubUserUseCase) :
+    AndroidViewModel(application) {
 
-    private val apiService: ApiService = ApiConfig.getApiService()
     private val user = MutableLiveData<GithubDetailResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -36,24 +32,14 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
 
     fun setUserDetail(username: String) {
         _isLoading.value = true
-        apiService.getUserDetail(username).enqueue(object : Callback<GithubDetailResponse> {
-            override fun onResponse(
-                call: Call<GithubDetailResponse>,
-                response: Response<GithubDetailResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    user.value = response.body()
-                } else {
-                    Log.e("DetailViewModel", "getUserDetail onResponse error: ${response.code()}")
-                }
+        githubUserUseCase.getUserDetail(username).observeForever { result ->
+            _isLoading.value = false
+            if (result != null) {
+                user.postValue(result)
+            } else {
+                Log.d("Failure", "Failed to fetch Detail Data.")
             }
-
-            override fun onFailure(call: Call<GithubDetailResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e("DetailViewModel", "getUserDetail onFailure error: ${t.message}")
-            }
-        })
+        }
     }
 
     fun getUserDetail(): LiveData<GithubDetailResponse> {

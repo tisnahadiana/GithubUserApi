@@ -1,25 +1,26 @@
 package id.tisnahadiana.githubuserapi.core.domain.usecase
 
+import androidx.lifecycle.LiveData
 import id.tisnahadiana.githubuserapi.core.api.User
-import id.tisnahadiana.githubuserapi.core.data.source.GithubUserRepository
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
+import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
 
-class GithubUserInteractor (private val githubUserRepository: GithubUserRepository) : GithubUserUseCase {
+class GithubUserInteractor (private val githubUserRepository: IGithubUserRepository) : GithubUserUseCase {
 
-    fun getFollowers(username: String, callback: (List<User>?, String?) -> Unit) {
-        githubUserRepository.getFollowers(username, callback)
+    override fun getFollowers(username: String): LiveData<List<User>?> {
+        return githubUserRepository.getFollowers(username)
     }
 
-    fun getFollowing(username: String, callback: (List<User>?, String?) -> Unit) {
-        githubUserRepository.getFollowing(username, callback)
+    override fun getFollowing(username: String): LiveData<List<User>?> {
+        return githubUserRepository.getFollowing(username)
     }
 
-    fun getUserDetail(username: String, callback: (GithubDetailResponse?, String?) -> Unit) {
-        githubUserRepository.getUserDetail(username, callback)
+    override fun getUserDetail(username: String) : LiveData<GithubDetailResponse?> {
+        return githubUserRepository.getUserDetail(username)
     }
 
-    fun getSearchUsers(query: String, callback: (List<User>?, String?) -> Unit) {
-        githubUserRepository.getSearchUsers(query, callback)
+    override fun getSearchUsers(query: String): LiveData<List<User>?> {
+        return githubUserRepository.getSearchUsers(query)
     }
 
 }

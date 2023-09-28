@@ -26,9 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: GithubUserAdapter
     private lateinit var viewModel: MainViewModel
-    private val viewModelsetting by viewModels<MainViewModel> {
-        MainViewModel.Factory(SettingPreferences(this))
-    }
+    private val viewModelsetting by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

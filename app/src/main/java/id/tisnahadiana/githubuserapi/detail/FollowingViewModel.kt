@@ -4,38 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiConfig
-import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiService
 import id.tisnahadiana.githubuserapi.core.api.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 
-class FollowingViewModel : ViewModel() {
+class FollowingViewModel (private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
-    private val apiService: ApiService = ApiConfig.getApiService()
-    val listFollowing = MutableLiveData<ArrayList<User>>()
+    val listFollowing = MutableLiveData<List<User>>()
 
     fun setListFollowing(username: String) {
-        apiService.getFollowing(username)
-            .enqueue(object : Callback<ArrayList<User>> {
-                override fun onResponse(
-                    call: Call<ArrayList<User>>,
-                    response: Response<ArrayList<User>>
-                ) {
-                    if (response.isSuccessful) {
-                        listFollowing.postValue(response.body())
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                    t.message?.let { Log.d("Failure", it) }
-                }
-
-            })
+        githubUserUseCase.getFollowing(username).observeForever { result ->
+            if (result != null) {
+                listFollowing.postValue(result)
+            } else {
+                Log.d("Failure", "Failed to fetch following.")
+            }
+        }
     }
 
-    fun getListFollowing(): LiveData<ArrayList<User>> {
+    fun getListFollowing(): LiveData<List<User>> {
         return listFollowing
     }
 }
