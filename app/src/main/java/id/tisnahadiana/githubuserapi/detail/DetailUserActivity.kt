@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import id.tisnahadiana.githubuserapi.R
+import id.tisnahadiana.githubuserapi.core.ui.ViewModelFactory
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +32,8 @@ class DetailUserActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
 
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory).get(DetailViewModel::class.java)
 
         viewModel.isLoading.observe(this) {
             showLoading(it)
@@ -60,14 +62,12 @@ class DetailUserActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val count = viewModel.checkUser(id)
             withContext(Dispatchers.Main) {
-                if (count != null) {
-                    if (count > 0) {
-                        binding.toggleFavorite.isChecked = true
-                        _isChecked = true
-                    } else {
-                        binding.toggleFavorite.isChecked = false
-                        _isChecked = false
-                    }
+                if (count > 1) {
+                    binding.toggleFavorite.isChecked = true
+                    _isChecked = true
+                } else {
+                    binding.toggleFavorite.isChecked = false
+                    _isChecked = false
                 }
             }
         }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
+import id.tisnahadiana.githubuserapi.core.ui.ViewModelFactory
 import id.tisnahadiana.githubuserapi.databinding.ActivityFavoriteBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
 import id.tisnahadiana.githubuserapi.main.GithubUserAdapter
@@ -25,7 +26,8 @@ class FavoriteActivity : AppCompatActivity() {
 
         supportActionBar?.setTitle(R.string.favorite_page)
 
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory).get(FavoriteViewModel::class.java)
 
         adapter = GithubUserAdapter()
         adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {
@@ -47,12 +49,12 @@ class FavoriteActivity : AppCompatActivity() {
             rvUserFav.adapter = adapter
         }
 
-        viewModel.getFavoriteUser()?.observe(this, {
+        viewModel.getFavoriteUser().observe(this) {
             if (it != null) {
                 val list = mapList(it)
                 adapter.setList(list)
             }
-        })
+        }
     }
 
     private fun mapList(users: List<FavoriteUser>): ArrayList<User> {

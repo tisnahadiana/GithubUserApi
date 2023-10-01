@@ -1,34 +1,18 @@
 package id.tisnahadiana.githubuserapi.detail
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
-import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
-import id.tisnahadiana.githubuserapi.core.data.source.local.room.FavoriteUserDao
-import id.tisnahadiana.githubuserapi.core.data.source.local.room.UserDatabase
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class DetailViewModel(application: Application, private val githubUserUseCase: GithubUserUseCase) :
-    AndroidViewModel(application) {
+class DetailViewModel(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
     private val user = MutableLiveData<GithubDetailResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-    private var userDao: FavoriteUserDao?
-    private var userDB: UserDatabase?
-
-    init {
-        userDB = UserDatabase.getDatabase(application)
-        userDao = userDB?.favoriteUserDao()
-    }
 
     fun setUserDetail(username: String) {
         _isLoading.value = true
@@ -47,22 +31,12 @@ class DetailViewModel(application: Application, private val githubUserUseCase: G
     }
 
     fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val user = FavoriteUser(
-                username,
-                id,
-                avatarUrl,
-                htmlUrl
-            )
-            userDao?.addToFavorite(user)
-        }
+        githubUserUseCase.addToFavorite(username, id, avatarUrl, htmlUrl)
     }
 
-    fun checkUser(id: Int) = userDao?.checkUser(id)
+    fun checkUser(id: Int) : Int = githubUserUseCase.checkUser(id)
 
     fun removeFromFavorite(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            userDao?.removeFromFavorite(id)
-        }
+        githubUserUseCase.removeFromFavorite(id)
     }
 }

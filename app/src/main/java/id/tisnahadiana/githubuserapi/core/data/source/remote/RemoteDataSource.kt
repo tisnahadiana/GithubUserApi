@@ -6,13 +6,11 @@ import id.tisnahadiana.githubuserapi.core.api.SearchResponse
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiService
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
-import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RemoteDataSource private constructor(private val apiService: ApiService) :
-    IGithubUserRepository {
+class RemoteDataSource private constructor(private val apiService: ApiService)  {
     companion object {
         @Volatile
         private var instance: RemoteDataSource? = null
@@ -23,7 +21,7 @@ class RemoteDataSource private constructor(private val apiService: ApiService) :
             }
     }
 
-    override fun getFollowers(username: String): LiveData<List<User>?> {
+    fun getFollowers(username: String): LiveData<List<User>?> {
         val resultLiveData = MutableLiveData<List<User>?>()
         apiService.getFollowers(username).enqueue(object : Callback<ArrayList<User>> {
             override fun onResponse(
@@ -44,7 +42,7 @@ class RemoteDataSource private constructor(private val apiService: ApiService) :
         return resultLiveData
     }
 
-    override fun getFollowing(username: String): LiveData<List<User>?> {
+    fun getFollowing(username: String): LiveData<List<User>?> {
         val resultLiveData = MutableLiveData<List<User>?>()
         apiService.getFollowing(username).enqueue(object : Callback<ArrayList<User>> {
             override fun onResponse(
@@ -65,7 +63,7 @@ class RemoteDataSource private constructor(private val apiService: ApiService) :
         return resultLiveData
     }
 
-    override fun getUserDetail(username: String): LiveData<GithubDetailResponse?> {
+    fun getUserDetail(username: String): LiveData<GithubDetailResponse?> {
         val resultLiveData = MutableLiveData<GithubDetailResponse?>()
         apiService.getUserDetail(username).enqueue(object : Callback<GithubDetailResponse> {
             override fun onResponse(
@@ -86,7 +84,7 @@ class RemoteDataSource private constructor(private val apiService: ApiService) :
         return resultLiveData
     }
 
-    override fun getSearchUsers(query: String): LiveData<List<User>?> {
+    fun getSearchUsers(query: String): LiveData<List<User>?> {
         val resultLiveData = MutableLiveData<List<User>?>()
         apiService.searchUsers(query).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(

@@ -3,15 +3,14 @@ package id.tisnahadiana.githubuserapi.core.data.source
 import androidx.lifecycle.LiveData
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.LocalDataSource
+import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
 import id.tisnahadiana.githubuserapi.core.data.source.remote.RemoteDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
-import id.tisnahadiana.githubuserapi.core.utils.AppExecutors
 
 class GithubUserRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val localDataSource: LocalDataSource
 ) : IGithubUserRepository {
 
     companion object {
@@ -20,11 +19,10 @@ class GithubUserRepository private constructor(
 
         fun getInstance(
             remoteData: RemoteDataSource,
-            localData: LocalDataSource,
-            appExecutors: AppExecutors
+            localData: LocalDataSource
         ): GithubUserRepository =
             instance ?: synchronized(this) {
-                instance ?: GithubUserRepository(remoteData, localData, appExecutors)
+                instance ?: GithubUserRepository(remoteData, localData)
             }
     }
 
@@ -42,5 +40,21 @@ class GithubUserRepository private constructor(
 
     override fun getSearchUsers(query: String): LiveData<List<User>?> {
         return remoteDataSource.getSearchUsers(query)
+    }
+
+    override fun getFavoriteUser(): LiveData<List<FavoriteUser>> {
+        return localDataSource.getFavoriteUser()
+    }
+
+    override fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String) {
+        return localDataSource.addToFavorite(username, id, avatarUrl, htmlUrl)
+    }
+
+    override fun checkUser(id: Int) : Int {
+        return localDataSource.checkUser(id)
+    }
+
+    override fun removeFromFavorite(id: Int) {
+        return localDataSource.removeFromFavorite(id)
     }
 }
