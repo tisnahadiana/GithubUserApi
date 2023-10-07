@@ -1,10 +1,10 @@
 package id.tisnahadiana.githubuserapi.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
 import id.tisnahadiana.githubuserapi.core.data.source.local.room.FavoriteUserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class LocalDataSource private constructor(private val favoriteUserDao: FavoriteUserDao) {
@@ -17,7 +17,7 @@ class LocalDataSource private constructor(private val favoriteUserDao: FavoriteU
                 instance ?: LocalDataSource(favoriteUserDao)
             }
     }
-    fun getFavoriteUser(): LiveData<List<FavoriteUser>> {
+    fun getFavoriteUser(): Flow<List<FavoriteUser>> {
         return favoriteUserDao.getFavoriteUser()
     }
 

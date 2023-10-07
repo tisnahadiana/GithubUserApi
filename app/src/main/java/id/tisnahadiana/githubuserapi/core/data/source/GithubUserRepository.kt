@@ -1,12 +1,13 @@
 package id.tisnahadiana.githubuserapi.core.data.source
 
-import androidx.lifecycle.LiveData
+import id.tisnahadiana.githubuserapi.core.api.SearchResponse
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.LocalDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
 import id.tisnahadiana.githubuserapi.core.data.source.remote.RemoteDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
+import kotlinx.coroutines.flow.Flow
 
 class GithubUserRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
@@ -26,35 +27,29 @@ class GithubUserRepository private constructor(
             }
     }
 
-    override fun getFollowers(username: String): LiveData<List<User>?> {
-        return remoteDataSource.getFollowers(username)
-    }
 
-    override fun getFollowing(username: String): LiveData<List<User>?> {
-        return remoteDataSource.getFollowing(username)
-    }
+    override suspend fun getFollowers(username: String): Flow<List<User>> =
+        remoteDataSource.getFollowers(username)
 
-    override fun getUserDetail( username: String ): LiveData<GithubDetailResponse?> {
-        return remoteDataSource.getUserDetail(username)
-    }
+    override suspend fun getFollowing(username: String): Flow<List<User>> =
+        remoteDataSource.getFollowing(username)
 
-    override fun getSearchUsers(query: String): LiveData<List<User>?> {
-        return remoteDataSource.getSearchUsers(query)
-    }
+    override suspend fun getUserDetail(username: String): Flow<GithubDetailResponse> =
+        remoteDataSource.getUserDetail(username)
 
-    override fun getFavoriteUser(): LiveData<List<FavoriteUser>> {
-        return localDataSource.getFavoriteUser()
-    }
+    override suspend fun getSearchUsers(query: String): Flow<List<User>> =
+        remoteDataSource.getSearchUsers(query)
 
-    override fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String) {
-        return localDataSource.addToFavorite(username, id, avatarUrl, htmlUrl)
-    }
+    override suspend fun getFavoriteUser(): Flow<List<FavoriteUser>> =
+        localDataSource.getFavoriteUser()
 
-    override fun checkUser(id: Int) : Int {
-        return localDataSource.checkUser(id)
-    }
+    override suspend fun addToFavorite(
+        username: String,
+        id: Int,
+        avatarUrl: String,
+        htmlUrl: String
+    ) = localDataSource.addToFavorite(username, id, avatarUrl, htmlUrl)
 
-    override fun removeFromFavorite(id: Int) {
-        return localDataSource.removeFromFavorite(id)
-    }
+    override suspend fun checkUser(id: Int): Int = localDataSource.checkUser(id)
+    override suspend fun removeFromFavorite(id: Int) = localDataSource.removeFromFavorite(id)
 }

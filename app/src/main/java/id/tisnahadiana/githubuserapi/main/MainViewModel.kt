@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
+import kotlinx.coroutines.launch
+
 class MainViewModel(
     private val preferences: SettingPreferences,
     private val githubUserUseCase: GithubUserUseCase
@@ -13,8 +15,10 @@ class MainViewModel(
     fun getTheme() = preferences.getThemeSetting().asLiveData()
 
     fun setSearchUsers(query: String) {
-        githubUserUseCase.getSearchUsers(query).observeForever { users ->
-            listUsers.postValue(users)
+        viewModelScope.launch {
+            githubUserUseCase.getSearchUsers(query).collect { users ->
+                listUsers.postValue(users)
+            }
         }
     }
 
