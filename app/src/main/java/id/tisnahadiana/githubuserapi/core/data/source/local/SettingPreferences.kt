@@ -4,12 +4,16 @@ import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-private val Context.prefDataStore by preferencesDataStore("settings")
+@ViewModelScoped
+class SettingPreferences @Inject constructor(@ApplicationContext private val context: Context) {
 
-class SettingPreferences constructor(context: Context) {
+    private val Context.prefDataStore by preferencesDataStore("settings")
 
     private val settingsDataStore = context.prefDataStore
     private val themeKEY = booleanPreferencesKey(THEME_SETTINGS)

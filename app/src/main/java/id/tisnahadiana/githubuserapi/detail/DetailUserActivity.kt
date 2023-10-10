@@ -3,17 +3,17 @@ package id.tisnahadiana.githubuserapi.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.ui.ViewModelFactory
+import id.tisnahadiana.githubuserapi.core.ui.SectionPagerAdapter
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+@AndroidEntryPoint
 class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailUserBinding
@@ -31,9 +31,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
-
-        val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory).get(DetailViewModel::class.java)
 
         viewModel.isLoading.observe(this) {
             showLoading(it)

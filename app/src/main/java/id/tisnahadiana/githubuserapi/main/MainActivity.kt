@@ -13,14 +13,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.api.User
-import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
 import id.tisnahadiana.githubuserapi.favorite.FavoriteActivity
 import id.tisnahadiana.githubuserapi.setting.SettingActivity
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

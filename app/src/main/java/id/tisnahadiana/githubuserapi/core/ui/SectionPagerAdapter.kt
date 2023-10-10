@@ -1,4 +1,4 @@
-package id.tisnahadiana.githubuserapi.detail
+package id.tisnahadiana.githubuserapi.core.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity.Companion.EXTRA_USERNAME
+import id.tisnahadiana.githubuserapi.detail.FollowersFragment
+import id.tisnahadiana.githubuserapi.detail.FollowingFragment
 
 class SectionPagerAdapter(
     fragmentActivity: FragmentActivity,

@@ -5,10 +5,12 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.databinding.FragmentFollowBinding
 import id.tisnahadiana.githubuserapi.main.GithubUserAdapter
 
+@AndroidEntryPoint
 class FollowingFragment : Fragment(R.layout.fragment_follow) {
 
     private var _binding: FragmentFollowBinding? = null

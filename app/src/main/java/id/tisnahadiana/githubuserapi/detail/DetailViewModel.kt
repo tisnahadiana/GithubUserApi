@@ -5,11 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
     private val user = MutableLiveData<GithubDetailResponse>()
 

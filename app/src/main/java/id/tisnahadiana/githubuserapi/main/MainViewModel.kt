@@ -1,12 +1,15 @@
 package id.tisnahadiana.githubuserapi.main
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val preferences: SettingPreferences,
     private val githubUserUseCase: GithubUserUseCase
 ) : ViewModel() {

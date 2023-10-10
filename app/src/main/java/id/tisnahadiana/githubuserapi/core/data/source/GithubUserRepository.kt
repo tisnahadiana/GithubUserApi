@@ -1,6 +1,5 @@
 package id.tisnahadiana.githubuserapi.core.data.source
 
-import id.tisnahadiana.githubuserapi.core.api.SearchResponse
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.LocalDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
@@ -8,25 +7,14 @@ import id.tisnahadiana.githubuserapi.core.data.source.remote.RemoteDataSource
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GithubUserRepository private constructor(
+@Singleton
+class GithubUserRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : IGithubUserRepository {
-
-    companion object {
-        @Volatile
-        private var instance: GithubUserRepository? = null
-
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localData: LocalDataSource
-        ): GithubUserRepository =
-            instance ?: synchronized(this) {
-                instance ?: GithubUserRepository(remoteData, localData)
-            }
-    }
-
 
     override suspend fun getFollowers(username: String): Flow<List<User>> =
         remoteDataSource.getFollowers(username)

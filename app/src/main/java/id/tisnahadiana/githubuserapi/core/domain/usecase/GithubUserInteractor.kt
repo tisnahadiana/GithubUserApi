@@ -5,8 +5,9 @@ import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GithubUserInteractor(private val githubUserRepository: IGithubUserRepository) :
+class GithubUserInteractor @Inject constructor(private val githubUserRepository: IGithubUserRepository) :
     GithubUserUseCase {
 
     override suspend fun getFollowers(username: String): Flow<List<User>> =

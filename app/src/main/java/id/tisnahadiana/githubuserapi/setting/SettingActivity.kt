@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.databinding.ActivitySettingBinding
-
+@AndroidEntryPoint
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
-    private val viewModel by viewModels<SettingViewModel> {
-        SettingViewModel.Factory(SettingPreferences(this))
-    }
+    private val viewModel: SettingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

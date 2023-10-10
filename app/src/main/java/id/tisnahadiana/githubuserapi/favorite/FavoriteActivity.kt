@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
-import id.tisnahadiana.githubuserapi.core.ui.ViewModelFactory
 import id.tisnahadiana.githubuserapi.databinding.ActivityFavoriteBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
 import id.tisnahadiana.githubuserapi.main.GithubUserAdapter
@@ -27,9 +26,6 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setTitle(R.string.favorite_page)
-
-        val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory).get(FavoriteViewModel::class.java)
 
         adapter = GithubUserAdapter()
         adapter.setOnItemClickCallback(object : GithubUserAdapter.OnItemClickCallback {

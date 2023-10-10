@@ -6,17 +6,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource private constructor(private val favoriteUserDao: FavoriteUserDao) {
+@Singleton
+class LocalDataSource @Inject constructor(private val favoriteUserDao: FavoriteUserDao) {
 
-    companion object {
-        private var instance: LocalDataSource? = null
-
-        fun getInstance(favoriteUserDao: FavoriteUserDao): LocalDataSource =
-            instance ?: synchronized(this) {
-                instance ?: LocalDataSource(favoriteUserDao)
-            }
-    }
     fun getFavoriteUser(): Flow<List<FavoriteUser>> {
         return favoriteUserDao.getFavoriteUser()
     }
@@ -33,7 +28,7 @@ class LocalDataSource private constructor(private val favoriteUserDao: FavoriteU
         }
     }
 
-    fun checkUser(id: Int)  = favoriteUserDao.checkUser(id)
+    fun checkUser(id: Int) = favoriteUserDao.checkUser(id)
 
     fun removeFromFavorite(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
