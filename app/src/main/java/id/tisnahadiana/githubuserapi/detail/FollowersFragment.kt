@@ -2,8 +2,8 @@ package id.tisnahadiana.githubuserapi.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
@@ -15,9 +15,9 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
 
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding
-    private lateinit var viewModel: FollowersViewModel
     private lateinit var adapter: GithubUserAdapter
     private lateinit var username: String
+    private val viewModel by viewModels<FollowersViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +34,6 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
             adapter = this@FollowersFragment.adapter
         }
 
-        viewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
         viewModel.getListFollowers().observe(viewLifecycleOwner) { users ->
             adapter.setList(users)
             showLoading(false)

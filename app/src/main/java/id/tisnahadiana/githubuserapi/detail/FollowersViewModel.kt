@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiResponse
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,11 +18,18 @@ class FollowersViewModel @Inject constructor(private val githubUserUseCase: Gith
     val listFollowers = MutableLiveData<List<User>>()
     fun setListFollowers(username: String) {
         viewModelScope.launch {
-            githubUserUseCase.getFollowers(username).collect { result ->
-                if (result != null) {
-                    listFollowers.postValue(result)
-                } else {
-                    Log.d("Failure", "Failed to fetch Followers.")
+            githubUserUseCase.getFollowers(username).collect { apiResponse ->
+                when (apiResponse) {
+                    is ApiResponse.Success -> {
+                        val followers = apiResponse.data
+                        listFollowers.postValue(followers)
+                    }
+                    is ApiResponse.Error -> {
+                        Log.e("FollowersViewModel", "Error occurred: ${apiResponse.errorMessage}")
+                    }
+                    ApiResponse.Empty -> {
+                        Log.w("FollowersViewModel", "Empty response received.")
+                    }
                 }
             }
         }

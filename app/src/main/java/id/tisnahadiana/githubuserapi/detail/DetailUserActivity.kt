@@ -3,12 +3,14 @@ package id.tisnahadiana.githubuserapi.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.ui.SectionPagerAdapter
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
+import id.tisnahadiana.githubuserapi.favorite.FavoriteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +19,7 @@ import kotlinx.coroutines.withContext
 class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailUserBinding
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel by viewModels<DetailViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

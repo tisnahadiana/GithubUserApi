@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(private val githubUserUseCase: GithubUserUseCase) :
     ViewModel() {
-    suspend fun getFavoriteUser(): LiveData<List<FavoriteUser>> {
+    fun getFavoriteUser(): LiveData<List<FavoriteUser>> {
         return githubUserUseCase.getFavoriteUser().asLiveData()
     }
 }

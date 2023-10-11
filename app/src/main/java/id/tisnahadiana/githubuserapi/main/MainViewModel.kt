@@ -1,9 +1,11 @@
 package id.tisnahadiana.githubuserapi.main
 
+import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
+import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiResponse
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,8 +21,20 @@ class MainViewModel @Inject constructor(
 
     fun setSearchUsers(query: String) {
         viewModelScope.launch {
-            githubUserUseCase.getSearchUsers(query).collect { users ->
-                listUsers.postValue(users)
+            githubUserUseCase.getSearchUsers(query).collect { apiResponse ->
+                when (apiResponse) {
+                    is ApiResponse.Success -> {
+                        val searchResponse = apiResponse.data
+                        val users = searchResponse.items ?: emptyList()
+                        listUsers.postValue(users)
+                    }
+                    is ApiResponse.Error -> {
+                        Log.e("MainViewModel", "Error occurred: ${apiResponse.errorMessage}")
+                    }
+                    ApiResponse.Empty -> {
+                        Log.w("MainViewModel", "Empty response received.")
+                    }
+                }
             }
         }
     }

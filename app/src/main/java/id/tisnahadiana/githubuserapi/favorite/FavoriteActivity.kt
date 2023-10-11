@@ -3,9 +3,10 @@ package id.tisnahadiana.githubuserapi.favorite
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
@@ -13,12 +14,12 @@ import id.tisnahadiana.githubuserapi.databinding.ActivityFavoriteBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
 import id.tisnahadiana.githubuserapi.main.GithubUserAdapter
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoriteBinding
     private lateinit var adapter: GithubUserAdapter
-    private lateinit var viewModel: FavoriteViewModel
+    private val viewModel by viewModels<FavoriteViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

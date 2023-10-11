@@ -1,38 +1,34 @@
 package id.tisnahadiana.githubuserapi.core.domain.usecase
 
-import id.tisnahadiana.githubuserapi.core.api.User
-import id.tisnahadiana.githubuserapi.core.data.source.local.entity.FavoriteUser
-import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.repository.IGithubUserRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GithubUserInteractor @Inject constructor(private val githubUserRepository: IGithubUserRepository) :
     GithubUserUseCase {
 
-    override suspend fun getFollowers(username: String): Flow<List<User>> =
+    override suspend fun getFollowers(username: String) =
         githubUserRepository.getFollowers(username)
 
-    override suspend fun getFollowing(username: String): Flow<List<User>> =
+    override suspend fun getFollowing(username: String) =
         githubUserRepository.getFollowing(username)
 
-    override suspend fun getUserDetail(username: String): Flow<GithubDetailResponse> =
+    override suspend fun getUserDetail(username: String) =
         githubUserRepository.getUserDetail(username)
 
-    override suspend fun getSearchUsers(query: String): Flow<List<User>> =
+    override suspend fun getSearchUsers(query: String) =
         githubUserRepository.getSearchUsers(query)
 
-    override suspend fun getFavoriteUser(): Flow<List<FavoriteUser>> =
+    override fun getFavoriteUser() =
         githubUserRepository.getFavoriteUser()
 
-    override suspend fun addToFavorite(
+    override fun addToFavorite(
         username: String,
         id: Int,
         avatarUrl: String,
         htmlUrl: String
     ) = githubUserRepository.addToFavorite(username, id, avatarUrl, htmlUrl)
 
-    override suspend fun checkUser(id: Int): Int = githubUserRepository.checkUser(id)
-    override suspend fun removeFromFavorite(id: Int) = githubUserRepository.removeFromFavorite(id)
+    override fun checkUser(id: Int): Int = githubUserRepository.checkUser(id)
+    override fun removeFromFavorite(id: Int) = githubUserRepository.removeFromFavorite(id)
 
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiResponse
 import id.tisnahadiana.githubuserapi.core.data.source.remote.response.GithubDetailResponse
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import kotlinx.coroutines.launch
@@ -22,12 +23,19 @@ class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubU
     fun setUserDetail(username: String) {
         viewModelScope.launch {
             _isLoading.value = true
-            githubUserUseCase.getUserDetail(username).collect { result ->
+            githubUserUseCase.getUserDetail(username).collect { apiResponse ->
                 _isLoading.value = false
-                if (result != null) {
-                    user.postValue(result)
-                } else {
-                    Log.d("Failure", "Failed to fetch Detail Data.")
+                when (apiResponse) {
+                    is ApiResponse.Success -> {
+                        val githubDetailResponse = apiResponse.data // Extract GithubDetailResponse from ApiResponse.Success
+                        user.postValue(githubDetailResponse)
+                    }
+                    is ApiResponse.Error -> {
+                        Log.e("DetailViewModel", "Error occurred: ${apiResponse.errorMessage}")
+                    }
+                    ApiResponse.Empty -> {
+                        Log.w("DetailViewModel", "Empty response received.")
+                    }
                 }
             }
         }
