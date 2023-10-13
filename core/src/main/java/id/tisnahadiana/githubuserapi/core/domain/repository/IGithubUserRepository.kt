@@ -1,0 +1,19 @@
+package id.tisnahadiana.githubuserapi.core.domain.repository
+
+import id.tisnahadiana.githubuserapi.core.api.SearchResponse
+import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteUser
+import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
+import id.tisnahadiana.githubuserapi.core.source.remote.response.GithubDetailResponse
+import kotlinx.coroutines.flow.Flow
+
+interface IGithubUserRepository {
+    suspend fun getFollowers(username: String): Flow<ApiResponse<List<User>>>
+    suspend fun getFollowing(username: String): Flow<ApiResponse<List<User>>>
+    suspend fun getUserDetail(username: String): Flow<ApiResponse<GithubDetailResponse>>
+    suspend fun getSearchUsers(query: String): Flow<ApiResponse<SearchResponse>>
+    fun getFavoriteUser(): Flow<List<FavoriteUser>>
+    fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String)
+    fun checkUser(id: Int): Int
+    fun removeFromFavorite(id: Int)
+}

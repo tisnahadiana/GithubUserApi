@@ -8,9 +8,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.ui.SectionPagerAdapter
 import id.tisnahadiana.githubuserapi.databinding.ActivityDetailUserBinding
-import id.tisnahadiana.githubuserapi.favorite.FavoriteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "GithubUserApi"
 include ':app'
+include ':core'
+include ':favorite'

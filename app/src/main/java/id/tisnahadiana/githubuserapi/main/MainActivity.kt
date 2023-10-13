@@ -11,14 +11,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
 import id.tisnahadiana.githubuserapi.core.api.User
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
-import id.tisnahadiana.githubuserapi.favorite.FavoriteActivity
 import id.tisnahadiana.githubuserapi.setting.SettingActivity
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -115,9 +113,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.favorite_menu -> {
-                Intent(this, FavoriteActivity::class.java).also {
-                    startActivity(it)
-                }
+                startActivity(Intent(this, Class.forName("id.tisnahadiana.githubuserapi.favorite.FavoriteActivity")))
             }
 
             R.id.setting -> {

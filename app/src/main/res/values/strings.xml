@@ -13,4 +13,5 @@
     <string name="following">Following %d</string>
     <string name="favorite_page">Favorite Page</string>
     <string name="logo_github">Logo GitHub</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

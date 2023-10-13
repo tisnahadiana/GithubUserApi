@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.databinding.ActivitySettingBinding
 @AndroidEntryPoint
 class SettingActivity : AppCompatActivity() {

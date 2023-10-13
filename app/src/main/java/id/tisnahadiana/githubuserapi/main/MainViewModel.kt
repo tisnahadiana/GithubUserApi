@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.tisnahadiana.githubuserapi.core.api.User
-import id.tisnahadiana.githubuserapi.core.data.source.local.SettingPreferences
-import id.tisnahadiana.githubuserapi.core.data.source.remote.network.ApiResponse
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
+import id.tisnahadiana.githubuserapi.core.source.local.SettingPreferences
+import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
