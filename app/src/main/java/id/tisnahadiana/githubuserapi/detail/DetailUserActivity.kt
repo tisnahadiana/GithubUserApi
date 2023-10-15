@@ -59,7 +59,7 @@ class DetailUserActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val count = viewModel.checkUser(id)
             withContext(Dispatchers.Main) {
-                if (count > 1) {
+                if (count > 0) {
                     binding.toggleFavorite.isChecked = true
                     _isChecked = true
                 } else {

@@ -3,7 +3,7 @@ package id.tisnahadiana.githubuserapi.main
 import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.domain.model.User
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import id.tisnahadiana.githubuserapi.core.source.local.SettingPreferences
 import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
                 when (apiResponse) {
                     is ApiResponse.Success -> {
                         val searchResponse = apiResponse.data
-                        val users = searchResponse.items ?: emptyList()
+                        val users = searchResponse.users ?: emptyList()
                         listUsers.postValue(users)
                     }
                     is ApiResponse.Error -> {

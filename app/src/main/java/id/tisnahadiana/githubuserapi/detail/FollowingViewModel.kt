@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.domain.model.User
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
 import kotlinx.coroutines.launch

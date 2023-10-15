@@ -1,7 +1,7 @@
 package id.tisnahadiana.githubuserapi.core.source.remote.network
 
 import id.tisnahadiana.githubuserapi.core.api.SearchResponse
-import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.api.UserResponse
 import id.tisnahadiana.githubuserapi.core.source.remote.response.GithubDetailResponse
 import retrofit2.http.*
 
@@ -13,9 +13,9 @@ interface ApiService {
     suspend fun getUserDetail(@Path("username") username: String): GithubDetailResponse
 
     @GET("users/{username}/followers")
-    suspend fun getFollowers(@Path("username") username: String): List<User>
+    suspend fun getFollowers(@Path("username") username: String): List<UserResponse>
 
     @GET("users/{username}/following")
-    suspend fun getFollowing(@Path("username") username: String): List<User>
+    suspend fun getFollowing(@Path("username") username: String): List<UserResponse>
 
 }

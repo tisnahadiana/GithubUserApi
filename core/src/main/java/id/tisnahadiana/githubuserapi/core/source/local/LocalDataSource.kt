@@ -1,6 +1,6 @@
 package id.tisnahadiana.githubuserapi.core.source.local
 
-import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteUser
+import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteEntity
 import id.tisnahadiana.githubuserapi.core.source.local.room.FavoriteUserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSource @Inject constructor(private val favoriteUserDao: FavoriteUserDao) {
 
-    fun getFavoriteUser(): Flow<List<FavoriteUser>> {
+    fun getFavoriteUser(): Flow<List<FavoriteEntity>> {
         return favoriteUserDao.getFavoriteUser()
     }
 
     fun addToFavorite(username: String, id: Int, avatarUrl: String, htmlUrl: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val user = FavoriteUser(
+            val user = FavoriteEntity(
                 username,
                 id,
                 avatarUrl,

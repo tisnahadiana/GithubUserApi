@@ -2,10 +2,10 @@ package id.tisnahadiana.githubuserapi.core.source.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteUser
+import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteEntity
 
 @Database(
-    entities = [FavoriteUser::class],
+    entities = [FavoriteEntity::class],
     version = 1
     , exportSchema = false
 )

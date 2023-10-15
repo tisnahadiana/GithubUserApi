@@ -1,7 +1,7 @@
 package id.tisnahadiana.githubuserapi.core.source.remote
 
 import id.tisnahadiana.githubuserapi.core.api.SearchResponse
-import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.api.UserResponse
 import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
 import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiService
 import id.tisnahadiana.githubuserapi.core.source.remote.response.GithubDetailResponse
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getFollowers(username: String): Flow<ApiResponse<List<User>>> = flow {
+    suspend fun getFollowers(username: String): Flow<ApiResponse<List<UserResponse>>> = flow {
         try {
             val followers = apiService.getFollowers(username)
             emit(ApiResponse.Success(followers))
@@ -24,7 +24,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }
     }.flowOn(Dispatchers.IO)
 
-    suspend fun getFollowing(username: String): Flow<ApiResponse<List<User>>> = flow {
+    suspend fun getFollowing(username: String): Flow<ApiResponse<List<UserResponse>>> = flow {
         try {
             val following = apiService.getFollowing(username)
             emit(ApiResponse.Success(following))

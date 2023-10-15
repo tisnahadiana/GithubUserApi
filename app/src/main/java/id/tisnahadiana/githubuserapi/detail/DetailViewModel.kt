@@ -6,16 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.tisnahadiana.githubuserapi.core.domain.model.GithubUserDetail
 import id.tisnahadiana.githubuserapi.core.domain.usecase.GithubUserUseCase
 import id.tisnahadiana.githubuserapi.core.source.remote.network.ApiResponse
-import id.tisnahadiana.githubuserapi.core.source.remote.response.GithubDetailResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
-    private val user = MutableLiveData<GithubDetailResponse>()
+    private val user = MutableLiveData<GithubUserDetail>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -27,7 +27,7 @@ class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubU
                 _isLoading.value = false
                 when (apiResponse) {
                     is ApiResponse.Success -> {
-                        val githubDetailResponse = apiResponse.data // Extract GithubDetailResponse from ApiResponse.Success
+                        val githubDetailResponse = apiResponse.data
                         user.postValue(githubDetailResponse)
                     }
                     is ApiResponse.Error -> {
@@ -41,7 +41,7 @@ class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubU
         }
     }
 
-    fun getUserDetail(): LiveData<GithubDetailResponse> {
+    fun getUserDetail(): LiveData<GithubUserDetail> {
         return user
     }
 
@@ -51,7 +51,7 @@ class DetailViewModel @Inject constructor(private val githubUserUseCase: GithubU
         }
     }
 
-    suspend fun checkUser(id: Int) : Int = githubUserUseCase.checkUser(id)
+    fun checkUser(id: Int) : Int = githubUserUseCase.checkUser(id)
 
     fun removeFromFavorite(id: Int) {
         viewModelScope.launch {

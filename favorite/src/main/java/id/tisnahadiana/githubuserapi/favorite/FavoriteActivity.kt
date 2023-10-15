@@ -8,8 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.EntryPointAccessors
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.api.User
-import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteUser
+import id.tisnahadiana.githubuserapi.core.api.UserResponse
+import id.tisnahadiana.githubuserapi.core.domain.model.Favorite
+import id.tisnahadiana.githubuserapi.core.domain.model.User
+import id.tisnahadiana.githubuserapi.core.source.local.entity.FavoriteEntity
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
 import id.tisnahadiana.githubuserapi.di.FavoriteModuleDependencies
 import id.tisnahadiana.githubuserapi.favorite.databinding.ActivityFavoriteBinding
@@ -75,17 +77,17 @@ class FavoriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapList(users: List<FavoriteUser>): ArrayList<User> {
-        val listUsers = ArrayList<User>()
+    private fun mapList(users: List<Favorite>): ArrayList<User> {
+        val listUserResponses = ArrayList<User>()
         for (user in users) {
-            val userMapped = User(
+            val userResponseMapped = User(
                 login = user.login,
                 id = user.id,
-                avatarUrl = user.avatar_url,
-                htmlUrl = user.html_url
+                avatarUrl = user.avatarUrl,
+                htmlUrl = user.htmlUrl
             )
-            listUsers.add(userMapped)
+            listUserResponses.add(userResponseMapped)
         }
-        return listUsers
+        return listUserResponses
     }
 }

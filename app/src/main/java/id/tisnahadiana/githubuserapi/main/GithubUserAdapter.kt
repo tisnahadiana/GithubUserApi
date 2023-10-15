@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.api.User
+import id.tisnahadiana.githubuserapi.core.domain.model.User
 import id.tisnahadiana.githubuserapi.databinding.ItemUserBinding
 
 class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>() {
@@ -41,18 +41,18 @@ class GithubUserAdapter : RecyclerView.Adapter<GithubUserAdapter.UserViewHolder>
     inner class UserViewHolder(val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(user: User) {
+        fun bind(userResponse: User) {
             binding.root.setOnClickListener {
-                onItemClickCallback?.onItemClicked(user)
+                onItemClickCallback?.onItemClicked(userResponse)
             }
 
             binding.apply {
                 Glide.with(itemView)
-                    .load(user.avatarUrl)
+                    .load(userResponse.avatarUrl)
                     .placeholder(R.drawable.baseline_account_circle_24)
                     .into(avatarImage)
-                usernameText.text = user.login
-                urlText.text = user.htmlUrl
+                usernameText.text = userResponse.login
+                urlText.text = userResponse.htmlUrl
             }
 
 
