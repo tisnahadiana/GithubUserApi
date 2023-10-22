@@ -15,11 +15,6 @@ jobs:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
       - run:
-          name: Set Environment Variables
-          command: |
-            echo "API_KEY=$API_KEY" >> $BASH_ENV
-            echo "URL_KEY=$URL_KEY" >> $BASH_ENV
-      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
@@ -27,6 +22,11 @@ jobs:
           paths:
             - ~/.android/build-cache
             - ~/.android/cache
+      - run:
+          name: Set Environment Variables
+          command: |
+            echo "export API_KEY=$API_KEY" >> $BASH_ENV
+            echo "export URL_KEY=$URL_KEY" >> $BASH_ENV
       - run:
           name: Run Build
           command: ./gradlew build
