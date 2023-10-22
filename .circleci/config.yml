@@ -27,6 +27,9 @@ jobs:
           command: |
             echo "export API_KEY=$API_KEY" >> $BASH_ENV
             echo "export URL_KEY=$URL_KEY" >> $BASH_ENV
+        environment:
+          API_KEY: $API_KEY
+          URL_KEY: $URL_KEY
       - run:
           name: Run Build
           command: ./gradlew build
