@@ -14,7 +14,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.tisnahadiana.githubuserapi.R
-import id.tisnahadiana.githubuserapi.core.api.UserResponse
 import id.tisnahadiana.githubuserapi.core.domain.model.User
 import id.tisnahadiana.githubuserapi.databinding.ActivityMainBinding
 import id.tisnahadiana.githubuserapi.detail.DetailUserActivity
