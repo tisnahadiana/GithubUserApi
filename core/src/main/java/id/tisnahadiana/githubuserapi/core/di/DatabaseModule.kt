@@ -9,6 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.tisnahadiana.githubuserapi.core.source.local.room.FavoriteUserDao
 import id.tisnahadiana.githubuserapi.core.source.local.room.UserDatabase
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
 
 @Module
@@ -16,10 +18,17 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): UserDatabase = Room.databaseBuilder(
-        context,
-        UserDatabase::class.java, "user_database"
-    ).fallbackToDestructiveMigration().build()
+    fun provideDatabase(@ApplicationContext context: Context): UserDatabase {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("tisnahadiana".toCharArray())
+        val factory = SupportFactory(passphrase)
+        return Room.databaseBuilder(
+            context,
+            UserDatabase::class.java, "user_database"
+        ).fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
+            .build()
+    }
+
     @Provides
     fun provideFavoriteUserDao(database: UserDatabase): FavoriteUserDao = database.favoriteUserDao()
 

@@ -59,4 +59,7 @@ dependencies {
 
     api 'androidx.fragment:fragment-ktx:1.6.1'
     api "androidx.activity:activity-ktx:1.8.0"
+
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.1.0"
 }
