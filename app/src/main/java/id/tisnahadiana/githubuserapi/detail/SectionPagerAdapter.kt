@@ -13,8 +13,8 @@ class SectionPagerAdapter(
 ) : FragmentStateAdapter(fragmentActivity) {
 
     companion object {
-        private const val TAB_1 = R.string.tab_1
-        private const val TAB_2 = R.string.tab_2
+        private var TAB_1 = R.string.tab_1
+        private var TAB_2 = R.string.tab_2
         internal val TAB_TITLES = intArrayOf(TAB_1, TAB_2)
     }
 

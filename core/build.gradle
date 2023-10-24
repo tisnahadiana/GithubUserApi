@@ -19,18 +19,9 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         Properties properties = new Properties()
-        def localPropertiesFile = project.rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            properties.load(localPropertiesFile.newDataInputStream())
-            buildConfigField "String", "API_KEY", "\"${properties.getProperty("apiKey") ?: ""}\""
-            buildConfigField "String", "URL_KEY", "\"${properties.getProperty("urlKey") ?: ""}\""
-        } else {
-            properties['API_KEY'] = System.getenv("API_KEY")
-            properties['URL_KEY'] = System.getenv("URL_KEY")
-            buildConfigField "String", "API_KEY", "\"${"API_KEY" ?: ""}\""
-            buildConfigField "String", "URL_KEY", "\"${"URL_KEY" ?: ""}\""
-        }
-
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
+        buildConfigField "String", "URL_KEY", "\"${properties.getProperty("URL_KEY")}\""
 
     }
 

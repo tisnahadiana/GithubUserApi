@@ -43,6 +43,7 @@ class MainViewModel @Inject constructor(
         return listUsers
     }
 
+    @Suppress("UNCHECKED_CAST")
     class Factory(
         private val preferences: SettingPreferences,
         private val githubUserUseCase: GithubUserUseCase

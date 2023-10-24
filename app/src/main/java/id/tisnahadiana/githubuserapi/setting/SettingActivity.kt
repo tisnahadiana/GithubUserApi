@@ -38,6 +38,7 @@ class SettingActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION", "UNUSED_EXPRESSION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.favorite_menu -> {

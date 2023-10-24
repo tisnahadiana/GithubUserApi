@@ -1,6 +1,5 @@
 package id.tisnahadiana.githubuserapi.core.source.remote.network
 
-import id.tisnahadiana.githubuserapi.core.BuildConfig
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,7 +12,7 @@ object ApiConfig {
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             val requestHeaders = req.newBuilder()
-                .addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}")
+                .addHeader("Authorization", "Bearer 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")
                 .build()
             chain.proceed(requestHeaders)
         }
@@ -30,7 +29,7 @@ object ApiConfig {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.URL_KEY)
+            .baseUrl("https://api.github.com")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
