@@ -9,14 +9,8 @@ jobs:
       - image: cimg/android:2023.08
     steps:
       - checkout
-
       - restore_cache:
           key: android-orb-v1-
-      - run:
-          name: Set Environment Variables
-          command: |
-            echo "API_KEY=${API_KEY}" >> $BASH_ENV
-            echo "URL_KEY=${URL_KEY}" >> $BASH_ENV
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
