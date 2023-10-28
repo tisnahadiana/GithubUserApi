@@ -1,5 +1,6 @@
 package id.tisnahadiana.githubuserapi.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import id.tisnahadiana.githubuserapi.R
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private val SPLASH_DELAY_MS = 2000L
